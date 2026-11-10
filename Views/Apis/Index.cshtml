@@ -1,0 +1,21 @@
+@model List<BuildWorkflowAPI.Models.ApiDefinition>
+@{ ViewData["Title"]="APIs"; }
+<h2>APIs</h2>
+<a class="btn btn-primary mb-2" asp-action="Create">New API</a>
+@if(TempData["NewKey"]!=null){<div class="alert alert-success">New key: @TempData["NewKey"] (save it now)</div>}
+<div class="mb-2">
+<form asp-action="AddGlobalKey" method="post" class="d-inline-flex gap-2">
+<input name="name" placeholder="Global key name" class="form-control form-control-sm"/>
+<button class="btn btn-sm btn-secondary">Create Global Key</button>
+</form>
+</div>
+<table class="table">
+<tr><th>Name</th><th>Route</th><th>Method</th><th>Connection</th><th></th></tr>
+@foreach(var a in Model){
+<tr><td>@a.Name</td><td>/api/@a.Route</td><td>@a.HttpMethod</td><td>@a.Connection?.Name</td><td>
+<a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@a.Id">Details</a>
+<a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@a.Id">Edit</a>
+<form asp-action="Delete" method="post" style="display:inline"><input type="hidden" name="id" value="@a.Id"/><button class="btn btn-sm btn-danger">Delete</button></form>
+</td></tr>
+}
+</table>

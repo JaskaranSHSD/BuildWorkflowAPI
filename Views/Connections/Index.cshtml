@@ -1,0 +1,12 @@
+@model List<BuildWorkflowAPI.Models.ApiConnection>
+@{ ViewData["Title"]="Connections"; }
+<h2>Connections</h2>
+<a class="btn btn-primary mb-2" asp-action="Create">New Connection</a>
+<table class="table">
+<tr><th>Name</th><th>Provider</th><th></th></tr>
+@foreach(var c in Model){
+<tr><td>@c.Name</td><td>@c.Provider</td><td>
+<form asp-action="Delete" method="post" style="display:inline"><input type="hidden" name="id" value="@c.Id"/><button class="btn btn-sm btn-danger">Delete</button></form>
+<a class="btn btn-sm btn-secondary" asp-action="Edit" asp-route-id="@c.Id">Edit</a></td></tr>
+}
+</table>

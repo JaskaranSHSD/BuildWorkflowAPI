@@ -1,0 +1,18 @@
+@{ ViewData["Title"]="Login"; }
+<div class="card-surface" style="max-width:480px;margin:48px auto;">
+  <div class="card-header-bar"><strong>Sign in</strong></div>
+  <div class="card-body-pad">
+    @if(!ViewData.ModelState.IsValid){<div class="alert alert-danger">@Html.ValidationSummary()</div>}
+    <form asp-action="Login" method="post">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input name="username" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" required />
+      </div>
+      <button class="btn btn-gcp w-100" type="submit">Sign in</button>
+    </form>
+  </div>
+</div>

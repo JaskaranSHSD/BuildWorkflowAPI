@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BuildWorkflowAPI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0..200" rel="stylesheet" />
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BuildWorkflowAPI.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="app-bar">
+        <a class="app-logo" asp-controller="Home" asp-action="Index">
+            <span class="material-symbols-outlined">cloud</span>
+            <span>BuildWorkflow API Console</span>
+        </a>
+        <div class="app-actions">
+            <button class="icon-btn" type="button" title="Help"><span class="material-symbols-outlined">help</span></button>
+            <button class="icon-btn" type="button" title="Notifications"><span class="material-symbols-outlined">notifications</span></button>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="project-pill">
+                    <span class="material-symbols-outlined" style="font-size:16px;">account_circle</span>
+                    <span>@User.Identity!.Name</span>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="margin:0;">
+                    <button type="submit" class="icon-btn" title="Logout"><span class="material-symbols-outlined">logout</span></button>
+                </form>
+            }
+            else
+            {
+                <a class="btn btn-sm btn-gcp" asp-controller="Account" asp-action="Login">Sign in</a>
+            }
+        </div>
+    </header>
+
+    <div class="console-layout">
+        <aside class="side-nav" id="sideNav">
+            <div class="nav-section-title">Main</div>
+            <ul class="nav-item"><li><a asp-controller="Home" asp-action="Index"><span class="material-symbols-outlined">home</span>Home</a></li></ul>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="nav-section-title">API Management</div>
+                <ul class="nav-item"><li><a asp-controller="Connections" asp-action="Index"><span class="material-symbols-outlined">database</span>Connections</a></li></ul>
+                <ul class="nav-item"><li><a asp-controller="Apis" asp-action="Index"><span class="material-symbols-outlined">api</span>API definitions</a></li></ul>
+                <ul class="nav-item"><li><a asp-controller="Logs" asp-action="Index"><span class="material-symbols-outlined">article</span>API logs</a></li></ul>
+            }
+            <div class="nav-section-title">Account</div>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <ul class="nav-item"><li><a asp-controller="Home" asp-action="Privacy"><span class="material-symbols-outlined">privacy_tip</span>Privacy</a></li></ul>
+            }
+            else
+            {
+                <ul class="nav-item"><li><a asp-controller="Account" asp-action="Login"><span class="material-symbols-outlined">login</span>Sign in</a></li></ul>
+            }
+        </aside>
+
+        <main class="main-content">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,14 @@
+@{ ViewData["Title"]="SSO Login"; }
+<div class="card-surface" style="max-width:480px;margin:48px auto;">
+  <div class="card-header-bar"><strong>SSO login</strong></div>
+  <div class="card-body-pad">
+    <p class="text-muted">Enter the SSO token provided by your identity provider.</p>
+    <form asp-controller="Sso" asp-action="Callback" method="get">
+      <div class="mb-3">
+        <label class="form-label">SSO token</label>
+        <input name="token" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-gcp">Continue</button>
+    </form>
+  </div>
+</div>

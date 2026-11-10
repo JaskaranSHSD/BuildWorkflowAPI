@@ -1,0 +1,10 @@
+@model BuildWorkflowAPI.Models.ApiConnection
+@{ ViewData["Title"]="Edit Connection"; }
+<h2>Edit Connection</h2>
+<form asp-action="Edit" method="post">
+<input type="hidden" asp-for="Id"/>
+<div class="mb-2"><label>Name</label><input asp-for="Name" class="form-control"/></div>
+<div class="mb-2"><label>Provider</label><select asp-for="Provider" class="form-control" asp-items="Html.GetEnumSelectList<BuildWorkflowAPI.Models.DbProvider>()"></select></div>
+<div class="mb-2"><label>Connection String</label><textarea asp-for="ConnectionString" class="form-control"></textarea></div>
+<button class="btn btn-primary">Save</button>
+</form>

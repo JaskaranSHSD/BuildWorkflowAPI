@@ -1,0 +1,47 @@
+@model BuildWorkflowAPI.Models.ApiDefinition
+@{ ViewData["Title"]=Model.Name; }
+<div class="page-header">
+  <h1 class="page-title">@Model.Name</h1>
+  <a class="btn btn-gcp-outline btn-sm" asp-action="Index">Back to APIs</a>
+</div>
+@if(TempData["NewKey"]!=null){<div class="alert alert-success">New key: <code>@TempData["NewKey"]</code> (save it now)</div>}
+<div class="card-surface mb-3">
+  <div class="card-header-bar">
+    <strong>Endpoint details</strong>
+    <span class="text-muted">/api/@Model.Route</span>
+  </div>
+  <div class="card-body-pad">
+    <p class="mb-1">@Model.Description</p>
+    <p class="mb-0"><b>Command:</b> @Model.CommandType — <code>@Model.CommandText</code><br/><b>Connection:</b> @Model.Connection?.Name (@Model.Connection?.Provider)</p>
+  </div>
+</div>
+
+<h4>Parameters</h4>
+<table class="table"><tr><th>Name</th><th>Type</th><th>Dir</th><th>Required</th><th>Default</th><th></th></tr>
+@foreach(var p in Model.Parameters){
+<tr><td>@p.Name</td><td>@p.DbType</td><td>@(p.IsOutput?"OUT":"IN")</td><td>@p.IsRequired</td><td>@p.DefaultValue</td><td>
+<form asp-action="DeleteParameter" method="post" style="display:inline"><input type="hidden" name="id" value="@p.Id"/><input type="hidden" name="apiId" value="@Model.Id"/><button class="btn btn-sm btn-danger">Delete</button></form></td></tr>
+}
+</table>
+<form asp-action="AddParameter" method="post" class="row g-2 mb-3">
+<input type="hidden" name="apiId" value="@Model.Id"/>
+<div class="col"><input name="name" placeholder="Name" class="form-control" required/></div>
+<div class="col"><input name="dbType" placeholder="dbType e.g. string" class="form-control" value="string"/></div>
+<div class="col"><select name="isOutput" class="form-control"><option value="false">IN</option><option value="true">OUT</option></select></div>
+<div class="col"><select name="isRequired" class="form-control"><option value="true">Required</option><option value="false">Optional</option></select></div>
+<div class="col"><input name="defaultValue" placeholder="Default" class="form-control"/></div>
+<div class="col"><button class="btn btn-primary">Add</button></div>
+</form>
+
+<h4>API Keys</h4>
+<table class="table"><tr><th>Name</th><th>Key</th><th>Active</th><th></th></tr>
+@foreach(var k in Model.ApiKeys){
+<tr><td>@k.Name</td><td><code>@k.Key</code></td><td>@k.IsActive</td><td>
+<form asp-action="DeleteKey" method="post" style="display:inline"><input type="hidden" name="id" value="@k.Id"/><input type="hidden" name="apiId" value="@Model.Id"/><button class="btn btn-sm btn-danger">Delete</button></form></td></tr>
+}
+</table>
+<form asp-action="AddKey" method="post" class="d-inline-flex gap-2">
+<input type="hidden" name="apiId" value="@Model.Id"/>
+<input name="name" placeholder="Key name" class="form-control"/>
+<button class="btn btn-primary">Generate Key</button>
+</form>

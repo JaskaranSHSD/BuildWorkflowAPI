@@ -1,0 +1,13 @@
+@model BuildWorkflowAPI.Models.ApiDefinition
+@{ ViewData["Title"]="Create API"; }
+<h2>Create API</h2>
+<form asp-action="Create" method="post">
+<div class="mb-2"><label>Name</label><input asp-for="Name" class="form-control"/></div>
+<div class="mb-2"><label>Route</label><input asp-for="Route" class="form-control"/></div>
+<div class="mb-2"><label>HttpMethod</label><input asp-for="HttpMethod" class="form-control"/></div>
+<div class="mb-2"><label>Connection</label><select asp-for="ConnectionId" class="form-control" asp-items="ViewBag.Connections"></select></div>
+<div class="mb-2"><label>Command Type</label><select asp-for="CommandType" class="form-control" asp-items="Html.GetEnumSelectList<BuildWorkflowAPI.Models.CommandType>()"></select></div>
+<div class="mb-2"><label>Command Text</label><textarea asp-for="CommandText" class="form-control" rows="5"></textarea></div>
+<div class="mb-2"><label>Description</label><input asp-for="Description" class="form-control"/></div>
+<button class="btn btn-primary">Save</button>
+</form>
